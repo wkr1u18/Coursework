@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CourseworkTest {
+	//OutputCapturer class taken for Dr. Packer's code for COMP1202 labs
 	class OutputCapturer {
 		private PrintStream origOut;
 
@@ -33,6 +34,7 @@ class CourseworkTest {
 	@Test
 	@DisplayName("Test Meter is constructed")
 	void MeterConstructorTest() {
+		//Creates and initialises Meter object.
 		Meter testMeter = new Meter("Water", (double) 2.5, (float) 0);
 		assertNotNull(testMeter, "checks Meter is not null");	
 	}
