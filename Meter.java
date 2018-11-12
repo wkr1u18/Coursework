@@ -1,5 +1,5 @@
 /**
- * Meter class describing object s that manage the consumption and production of particular utility.
+ * Meter class describing objects that manage the consumption and production of particular utility.
  * @author Wojciech Rozowski (wkr1u18)
  *
  */

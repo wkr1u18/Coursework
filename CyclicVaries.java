@@ -13,7 +13,7 @@ public class CyclicVaries extends Appliance {
 	private int internalClock = 0;
 	Random r;
 	/**
-	 * CyclicFixed constructor taking initialising Appliance master class fields as well as class-specific fields. ActiveHours must be in range [1,24]
+	 * CyclicVaries constructor taking initialising Appliance master class fields as well as class-specific fields.
 	 * @param name String containing appliance name.
 	 * @param meter Reference for {@link Meter} object managing this appliance usage.
 	 * @param minUnitsConsumed float describing minimal units' usage of this device
