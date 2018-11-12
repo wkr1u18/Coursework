@@ -9,8 +9,8 @@ public class Appliance {
 	
 	/**
 	 * Constructor setting up the class, taking name of the appliance and connecting the {@link Meter} object to it.
-	 * @param name
-	 * @param meter
+	 * @param name String containing appliance name
+	 * @param meter Reference for {@link Meter} object managing this appliance usage.
 	 */
 	public Appliance(String name, Meter meter) {
 		this.name = name;

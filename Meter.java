@@ -12,7 +12,7 @@ public class Meter {
 	 * Constructor creating Meter object with specified utility name, unit cost of measured utility and initial meterReading.
 	 * @param utilityName String describing the tpe of the utility
 	 * @param unitCost The cost of one unit of this type of utility
-	 * @param meterReading Float describing initial meter reading
+	 * @param meterReading float describing initial meter reading
 	 */
 	public Meter(String utilityName, double unitCost, float meterReading) {
 		this.utilityName = utilityName;
