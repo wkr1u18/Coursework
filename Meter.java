@@ -32,10 +32,13 @@ public class Meter {
 	 * Passes the information about consumed units and the total price of units to the standard output.
 	 * After passing the information, it resets the value of the meter.
 	 */
-	public void report() {
-		System.out.println(meterReading + " of " + utilityName + "have been consumed");
-		System.out.println("It costed: " + unitCost*meterReading);
+	public double report() {
+		System.out.println(meterReading + " units of " + utilityName + " have been consumed");
+		double finalCost = unitCost*meterReading;
+		System.out.println("It costed: " + finalCost);
 		//Clear the meter
 		meterReading = 0;
+		//Returns the total cost
+		return finalCost;
 	}
 }

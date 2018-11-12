@@ -18,22 +18,26 @@ public class CyclicFixed extends Appliance{
 	 * @param activeHours int describing number of hours, when the device is active.
 	 * @throws IllegalArgumentException when activeHours is not in range [1, 24]
 	 */
-	public CyclicFixed(String name, Meter meter, float unitsUsage, int activeHours) throws IllegalArgumentException {
-		super(name, meter);
+	public CyclicFixed(String name, float unitsUsage, int activeHours) throws IllegalArgumentException {
+		super(name);
 		this.unitsUsage = unitsUsage;
 		this.activeHours = activeHours;
 		if(this.activeHours < 1 || this.activeHours > 24) {
 			throw new IllegalArgumentException("activeHours out of range: " + this.activeHours + " expected range: [1,24]");
 		}
 	}
+	
+	/**
+	 * Handles the cyclic fixed appliance's behaviour when the time passes.
+	 */
 	@Override
 	public void timePasses() {
 		if(internalClock == 24) {
 			internalClock = 0;
 		}
 		if(internalClock<activeHours) {
-			internalClock++;
-			//consume
+			this.tellMeterToConsumeUnits(unitsUsage);
 		}
+		internalClock++;
 	}
 }

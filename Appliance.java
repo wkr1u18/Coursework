@@ -10,11 +10,9 @@ public class Appliance {
 	/**
 	 * Constructor setting up the class, taking name of the appliance and connecting the {@link Meter} object to it.
 	 * @param name String containing appliance name
-	 * @param meter Reference for {@link Meter} object managing this appliance usage.
 	 */
-	public Appliance(String name, Meter meter) {
+	public Appliance(String name) {
 		this.name = name;
-		this.meter = meter;
 	}
 	
 	/**
@@ -22,5 +20,21 @@ public class Appliance {
 	 */
 	public void timePasses() {
 		
+	}
+	
+	/**
+	 * Calls associated {@link Meter} to consume given amount of units.
+	 * @param unitsAmount float describing amount of units to be consumed
+	 */
+	protected void tellMeterToConsumeUnits(float unitsAmount) {
+		this.meter.consumeUnits(unitsAmount);
+	}
+	
+	/**
+	 * Sets appliance's meter to a given one.
+	 * @param meter Reference to {@link Meter} object to be attached to this appliance
+	 */
+	public void setMeter(Meter meter) {
+		this.meter = meter;
 	}
 }
