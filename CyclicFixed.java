@@ -4,7 +4,7 @@
  *
  */
 
-public class CyclicFixed extends Appliance{
+public class CyclicFixed extends Appliance {
 	private float unitsUsage;
 	private int activeHours; 
 	
@@ -14,7 +14,7 @@ public class CyclicFixed extends Appliance{
 	 * CyclicFixed constructor taking initialising Appliance master class fields as well as class-specific fields. ActiveHours must be in range [1,24]
 	 * @param name String containing appliance name.
 	 * @param meter Reference for {@link Meter} object managing this appliance usage.
-	 * @param unitsUsage float describing unit's usage of this device
+	 * @param unitsUsage float describing units' usage of this device
 	 * @param activeHours int describing number of hours, when the device is active.
 	 * @throws IllegalArgumentException when activeHours is not in range [1, 24]
 	 */

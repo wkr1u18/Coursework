@@ -35,6 +35,11 @@ public class Meter {
 	public double report() {
 		System.out.println(meterReading + " units of " + utilityName + " have been consumed");
 		double finalCost = unitCost*meterReading;
+		
+		//If the device generated more energy than it used, set the total cost equal to zero
+		if(finalCost < 0) {
+			finalCost = 0;
+		}
 		System.out.println("It costed: " + finalCost);
 		//Clear the meter
 		meterReading = 0;
