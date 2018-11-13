@@ -18,7 +18,7 @@ public class House {
 	public House() {
 		//Creates two Meter objects and initialises them with null values of counters and prices given in documentation
 		waterMeter = new Meter("water", 0.013, 0);
-		electricMeter = new Meter("electic", 0.002, 0);
+		electricMeter = new Meter("electric", 0.002, 0);
 		//Creates empty ArrayList for storing Appliance objects
 		applianceList = new ArrayList<Appliance>();
 	}
@@ -70,6 +70,10 @@ public class House {
 		return applianceList.size();
 	}
 	
+	/**
+	 * Runs the house simulation for one hour
+	 * @return double containing the total cost of running all the appliances for one hour 
+	 */
 	public double activate() {
 		double totalCost = 0;
 		//Iterates through all appliances stored in applianceList and calls their timePasses method
@@ -78,6 +82,22 @@ public class House {
 		}
 		totalCost += waterMeter.report();
 		totalCost += electricMeter.report();
+		return totalCost;
+	}
+	
+	
+	public double activate(int numberOfHours) {
+		double totalCost = 0;
+		for(int i = 0; i<numberOfHours; i++) {
+			try {
+				//Wait for 500 ms and then call the one-hour version of activate() method
+				Thread.sleep(500);
+				totalCost += activate();	
+			}
+			catch(InterruptedException e) {
+				//Ignore the exception
+			}
+		}
 		return totalCost;
 	}
 }
