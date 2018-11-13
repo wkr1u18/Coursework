@@ -15,7 +15,6 @@ public class CyclicVaries extends Appliance {
 	/**
 	 * CyclicVaries constructor taking initialising Appliance master class fields as well as class-specific fields.
 	 * @param name String containing appliance name.
-	 * @param meter Reference for {@link Meter} object managing this appliance usage.
 	 * @param minUnitsConsumed float describing minimal units' usage of this device
 	 * @param maxUnitsConsumed float describing maximal units' usage of this device 
 	 * @param activeHours int describing number of hours, when the device is active.

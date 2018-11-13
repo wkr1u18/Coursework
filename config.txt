@@ -1,0 +1,117 @@
+name: Lights
+subclass: CyclicFixed
+meter: electric
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 6
+Probability switched on:
+Cycle length: 5/24
+
+name: Fridge
+subclass: CyclicFixed
+meter: electric
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 2
+Probability switched on:
+Cycle length: 24/24
+
+name: Digital clock
+subclass: CyclicFixed
+meter: electric
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 0.1
+Probability switched on:
+Cycle length: 24/24
+
+name: Treadmill
+subclass: CyclicFixed
+meter: electric
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 2
+Probability switched on:
+Cycle length: 3/24
+
+name: Cooker
+subclass: CyclicVaries
+meter: electric
+Min units consumed: 4
+Max units consumed: 18
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
+name: Solar panels
+subclass: CyclicVaries
+meter: electric
+Min units consumed: -1
+Max units consumed: -30
+Fixed units consumed: 
+Probability switched on: 
+Cycle length: 9/24
+
+name: TV
+subclass: RandomFixed
+meter: electric
+Min units consumed: 
+Max units consumed: 
+Fixed units consumed: 2
+Probability switched on: 1 in 6
+Cycle length: 
+
+name: Kettle
+subclass: RandomFixed
+meter: electric
+Min units consumed: 
+Max units consumed: 
+Fixed units consumed: 25
+Probability switched on: 1 in 18
+Cycle length: 
+
+name: Computer
+subclass: RandomFixed
+meter: electric
+Min units consumed: 
+Max units consumed: 
+Fixed units consumed: 1.5
+Probability switched on: 1 in 6
+Cycle length: 
+
+name: Toilet
+subclass: RandomFixed
+meter: water
+Min units consumed: 
+Max units consumed: 
+Fixed units consumed: 5
+Probability switched on: 1 in 20
+Cycle length: 
+
+name: Hose
+subclass: RandomVaries
+meter: water
+Min units consumed: 5
+Max units consumed: 20
+Fixed units consumed: 
+Probability switched on: 1 in 12
+Cycle length: 
+
+name: Kitchen taps
+subclass: RandomVaries
+meter: water
+Min units consumed: 1
+Max units consumed: 10
+Fixed units consumed: 
+Probability switched on: 1 in 24
+Cycle length: 
+
+name: Wind turbine
+subclass: RandomVaries
+meter: electricity
+Min units consumed: -1
+Max units consumed: -25
+Fixed units consumed: 
+Probability switched on: 1 in 2
+Cycle length: 
+

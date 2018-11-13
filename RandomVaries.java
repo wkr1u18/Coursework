@@ -14,7 +14,6 @@ public class RandomVaries extends Appliance {
 	/**
 	 * CyclicFixed constructor taking initialising Appliance master class fields as well as class-specific fields. ActiveHours must be in range [1,24]
 	 * @param name String containing appliance name.
-	 * @param meter Reference for {@link Meter} object managing this appliance usage.
 	 * @param minUnitsConsumed float describing minimal units' usage of this device
 	 * @param maxUnitsConsumed float describing maximal units' usage of this device 
 	 * @param oneInN int describing 1 in N probability that device will be working
