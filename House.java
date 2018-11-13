@@ -11,13 +11,27 @@ public class House {
 	
 	private ArrayList<Appliance> applianceList;
 	
+	
 	/**
-	 * Constructor creating House object and initialising it's {@link Meter} and internal objects for storing information about connected appliances
+	 * Constructor creating House object and initialising it's {@link Meter} and internal objects for storing information about connected appliances.
 	 */
 	public House() {
 		//Creates two Meter objects and initialises them with null values of counters and prices given in documentation
 		waterMeter = new Meter("water", 0.013, 0);
 		electricMeter = new Meter("electic", 0.002, 0);
+		//Creates empty ArrayList for storing Appliance objects
+		applianceList = new ArrayList<Appliance>();
+	}
+	
+	/**
+	 * Constructor creating House object and initialising it's {@link Meter} objects using given references.
+	 * @param electricMeter reference to {@link Meter} object measuring the electricity usage
+	 * @param waterMeter reference to {@link Meter} object measuring the water usage
+	 */
+	public House(Meter electricMeter, Meter waterMeter) {
+		//Assigns the given references to waterMeter and electricMeter
+		this.electricMeter = electricMeter;
+		this.waterMeter = waterMeter;
 		//Creates empty ArrayList for storing Appliance objects
 		applianceList = new ArrayList<Appliance>();
 	}
