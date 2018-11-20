@@ -10,7 +10,7 @@ public class Meter {
 	
 	/**
 	 * Constructor creating Meter object with specified utility name, unit cost of measured utility and initial meterReading.
-	 * @param utilityName String describing the tpe of the utility
+	 * @param utilityName String describing the type of the utility
 	 * @param unitCost The cost of one unit of this type of utility
 	 * @param meterReading float describing initial meter reading
 	 */
@@ -45,5 +45,36 @@ public class Meter {
 		meterReading = 0;
 		//Returns the total cost
 		return finalCost;
+	}
+	
+	/**
+	 * Getter to meterReading field used in overrided versions of report() to access superclass data.
+	 * @return float stating the meter reading in units
+	 */
+	protected float getMeterReading() {
+		return meterReading;
+	}
+	
+	/**
+	 * Getter to unitCost field used in overrided versions of report() to access superclass data.
+	 * @return double stating the price of unit managed by the meter
+	 */
+	protected double getUnitCost() {
+		return unitCost;
+	}
+	
+	/**
+	 * Setter to meterReading field used in overrided versions of report to access superclass data.
+	 * @param meterReading float describing new state of meter reading
+	 */
+	protected void setMeterReading(float meterReading) {
+		this.meterReading = meterReading;
+	}
+	/**
+	 * Getter to utilityName field used in overrided versions of report() to access superclass data.
+	 * @return String with the name of managed utility by the meter.
+	 */
+	protected String getUtilityName() {
+		return utilityName;
 	}
 }

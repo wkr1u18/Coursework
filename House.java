@@ -13,17 +13,6 @@ public class House {
 	
 	
 	/**
-	 * Constructor creating House object and initialising it's {@link Meter} and internal objects for storing information about connected appliances.
-	 */
-	public House() {
-		//Creates two Meter objects and initialises them with null values of counters and prices given in documentation
-		waterMeter = new Meter("water", 0.013, 0);
-		electricMeter = new Meter("electric", 0.002, 0);
-		//Creates empty ArrayList for storing Appliance objects
-		applianceList = new ArrayList<Appliance>();
-	}
-	
-	/**
 	 * Constructor creating House object and initialising it's {@link Meter} objects using given references.
 	 * @param electricMeter reference to {@link Meter} object measuring the electricity usage
 	 * @param waterMeter reference to {@link Meter} object measuring the water usage
@@ -35,6 +24,15 @@ public class House {
 		//Creates empty ArrayList for storing Appliance objects
 		applianceList = new ArrayList<Appliance>();
 	}
+	
+	/**
+	 * Constructor creating House object and initialising it's {@link Meter} and internal objects for storing information about connected appliances.
+	 */
+	public House() {
+		//Calls overloaded constructor with Meter objects constructed with prices given in the specification.
+		this(new Meter("electric", 0.002, 0), new Meter("water", 0.013, 0));
+	}
+
 	
 	/**
 	 * Adds new {@link Appliance} object to the house and attaches it to the electric meter.
@@ -74,11 +72,16 @@ public class House {
 	 * Runs the house simulation for one hour
 	 * @return double containing the total cost of running all the appliances for one hour 
 	 */
-	public double activate() {
+	public double activate(){
 		double totalCost = 0;
 		//Iterates through all appliances stored in applianceList and calls their timePasses method
 		for(Appliance currentAppliance : applianceList) {
-			currentAppliance.timePasses();
+			try {
+				currentAppliance.timePasses();
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
 		}
 		totalCost += waterMeter.report();
 		totalCost += electricMeter.report();

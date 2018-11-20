@@ -36,9 +36,10 @@ public class RandomVaries extends Appliance {
 	
 	/**
 	 * Handles the cyclic fixed appliance's behaviour when the time passes.
+	 * @throws Exception when trying to access non-initialised {@link Meter} object
 	 */
 	@Override
-	public void timePasses() {
+	public void timePasses() throws Exception {
 		//Take the random number from the range [0, oneInN-1] and if it's equal to 0 (event with probability 1 / oneInN) 
 		if(r.nextInt(oneInN) == 0) {
 			//Consume units if equal to zero

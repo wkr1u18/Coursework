@@ -18,8 +18,9 @@ public class ConfigParser {
 	 * Parses a given configuration file into {@link House} object
 	 * @param directory String containing path to configuration file formatted in coursework specification
 	 * @return {@link House} object constructed using rules from configuration file
+	 * @throws 
 	 */
-	public House parseConfig(String directory) {
+	public House parseConfig(String directory){
 		simulationHouse = new House();
 		String inputLine = null;
 		
@@ -39,12 +40,15 @@ public class ConfigParser {
 		}
 		catch(FileNotFoundException ex) {
 			System.out.println("Unable to open file '"+ directory + "'");
+			System.exit(0);
 		}
 		catch(IOException ex) {
 			System.out.println("Error reading file '"+ directory + "'");
+			System.exit(0);
 		}
 		catch(Exception e) {
 			System.out.println(e);
+			System.exit(0);
 		}
 		return simulationHouse;
 	}

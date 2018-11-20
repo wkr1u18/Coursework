@@ -17,16 +17,21 @@ public class Appliance {
 	
 	/**
 	 * Abstract method denoting the time passing.
+	 * @throws Exception when children classes operate on non-initialised {@link Meter objects}
 	 */
-	public void timePasses() {
+	public void timePasses() throws Exception {
 		
 	}
 	
 	/**
 	 * Calls associated {@link Meter} to consume given amount of units.
 	 * @param unitsAmount float describing amount of units to be consumed
+	 * @throws Exception when called with no {@link Meter} object attached 
 	 */
-	protected void tellMeterToConsumeUnits(float unitsAmount) {
+	protected void tellMeterToConsumeUnits(float unitsAmount) throws Exception {
+		if(meter==null) {
+			throw new Exception("Cannot update non-initialised meter.");
+		}
 		this.meter.consumeUnits(unitsAmount);
 	}
 	

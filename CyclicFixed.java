@@ -28,9 +28,10 @@ public class CyclicFixed extends Appliance {
 	
 	/**
 	 * Handles the cyclic fixed appliance's behaviour when the time passes.
+	 * @throws Exception when trying to access non-initialised {@link Meter} object
 	 */
 	@Override
-	public void timePasses() {
+	public void timePasses() throws Exception {
 		if(internalClock == 24) {
 			internalClock = 0;
 		}
