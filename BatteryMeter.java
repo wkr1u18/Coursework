@@ -13,7 +13,7 @@ public class BatteryMeter extends Meter {
 	 * Constructor creating BatteryMeter object. It's initialisition is similar to {@link Meter} object, but additionally maximal capacity for battery must be specified.
 	 * @param utilityName String describing the tpe of the utility
 	 * @param unitCost The cost of one unit of this type of utility
-	 * @param meterReading float describing initial meter reading
+	 * @param meterReading float describing initial meter reading (from the mains)
 	 * @param initialBatteryMeterReading float describing initial battery meter reading
 	 * @param initialCapacity float describing maximal amount of units that can be stored in internal battery.
 	 */

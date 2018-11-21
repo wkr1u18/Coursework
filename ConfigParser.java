@@ -17,11 +17,10 @@ public class ConfigParser {
 	/**
 	 * Parses a given configuration file into {@link House} object
 	 * @param directory String containing path to configuration file formatted in coursework specification
-	 * @return {@link House} object constructed using rules from configuration file
-	 * @throws 
+	 * @return {@link House} object constructed using rules from configuration file 
 	 */
-	public House parseConfig(String directory){
-		simulationHouse = new House();
+	public House parseConfig(String directory, Meter electricMeter, Meter waterMeter){
+		simulationHouse = new House(electricMeter, waterMeter);
 		String inputLine = null;
 		
 		try {
