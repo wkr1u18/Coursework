@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * @author Wojciech Rozowski (wkr1u18)
  *
  */
-public class DoubleAppliance {
+public class DoubleAppliance implements EcoDevice{
 	private String name;
 	public Appliance waterAppliance;
 	private Appliance electricAppliance;
@@ -78,6 +78,7 @@ public class DoubleAppliance {
 	 * Switches the device between modes. This method toggles the active fields of all {@link Appliance} objects, which are used to model a DoubleAppliance.
 	 * @param Boolean value stating the device mode to be set. True for eco, false for non-eco mode. 
 	 */
+	@Override
 	public void setToEco(Boolean mode) {
 		this.mode = mode;
 		if(!hasEco) {

@@ -1,14 +1,5 @@
-name: Something
-subclass: CyclicFixed
-meter: electric
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 3
-Probability switched on:
-Cycle length: 24/24
-
 ecodoubleappliance: DishWasher
-mode: eco
+mode: normal
 subclass: CyclicFixed
 meter: waterdouble
 Min units consumed:
@@ -35,15 +26,6 @@ Cycle length: 24/24
 
 subclass: CyclicFixed
 meter: electricdouble
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 3
-Probability switched on:
-Cycle length: 24/24
-
-name: SomethingElse
-subclass: CyclicFixed
-meter: electric
 Min units consumed:
 Max units consumed:
 Fixed units consumed: 3

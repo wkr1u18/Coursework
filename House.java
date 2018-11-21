@@ -10,7 +10,7 @@ public class House {
 	private Meter electricMeter;
 	
 	private ArrayList<Appliance> applianceList;
-	
+	private ArrayList<EcoDevice> ecoDevices;
 	
 	/**
 	 * Constructor creating House object and initialising it's {@link Meter} objects using given references.
@@ -23,6 +23,7 @@ public class House {
 		this.waterMeter = waterMeter;
 		//Creates empty ArrayList for storing Appliance objects
 		applianceList = new ArrayList<Appliance>();
+		ecoDevices = new ArrayList<EcoDevice>();
 	}
 	
 	/**
@@ -97,6 +98,7 @@ public class House {
 	 * @param doubleAppliance reference to {@link DoubleAppliance} object to be added to the hous
 	 */
 	public void addDoubleAppliance(DoubleAppliance doubleAppliance) {
+		ecoDevices.add(doubleAppliance);
 		this.addWaterAppliance(doubleAppliance.getWaterAppliances());
 		this.addElectricAppliance(doubleAppliance.getElectricAppliances());
 	}
@@ -147,5 +149,15 @@ public class House {
 			}
 		}
 		return totalCost;
+	}
+	
+	/**
+	 * Switches all the eco devices in the house to specified mode.
+	 * @param mode Boolean value specifying new mode of all connected eco devices. True for eco mode, false for default mode.
+	 */
+	public void switchToEco(Boolean mode) {
+		for(EcoDevice e : ecoDevices) {
+			e.setToEco(mode);
+		}
 	}
 }
