@@ -29,11 +29,49 @@ public class ConfigParser {
 			while((inputLine = fileIn.readLine()) != null)
 			{
 				String[] splittedInstruction = inputLine.split(": ", 2);
-				if(splittedInstruction[0].equals("name")) {
+				switch(splittedInstruction[0]) {
+				case "name":
 					parseBlock(splittedInstruction[1]);
-				}
-				else {
-					throw new Exception("Syntax error, while reading config file!");
+					break;
+				case "doubleappliance":
+					//Parse two following blocks - for water and electric part of DoubleAppliance
+					Appliance waterPart = parseBlock(splittedInstruction[1]+"water");
+					Appliance electricPart = parseBlock(splittedInstruction[1]+"electric");
+					//Create and attach the device to the house
+					DoubleAppliance newDoubleAppliance = new DoubleAppliance(splittedInstruction[1], waterPart, electricPart);
+					simulationHouse.addDoubleAppliance(newDoubleAppliance);
+					break;
+				case "ecodoubleappliance":
+					if((inputLine = fileIn.readLine())==null)
+					{
+						throw new Exception("Empty line in eco double appliance declaration");
+					}
+					//Construct all the components of the DoubleAppliance by parsing the blocks of the config file
+					Appliance waterPartNormal = parseBlock(splittedInstruction[1]+"water");
+					Appliance electricPartNormal = parseBlock(splittedInstruction[1]+"electric");
+					Appliance waterPartEco = parseBlock(splittedInstruction[1]+"waterEco");
+					Appliance electricPartEco = parseBlock(splittedInstruction[1]+"electricEco");
+					//Create DoubleAppliance with eco mode by using overloaded constructor 
+					DoubleAppliance newEcoDoubleAppliance = new DoubleAppliance(splittedInstruction[1], waterPartNormal, electricPartNormal, waterPartEco, electricPartEco);
+					
+					//Decode the line stating the mode of the device, whether is it eco or not
+					String[] modeInstruction = inputLine.split(": ");
+					if(!modeInstruction[0].equals("mode")) {
+						throw new Exception("Not a \"mode:\" command!");
+					}
+					switch(modeInstruction[1]) {
+					case "eco":
+						newEcoDoubleAppliance.setToEco(true);
+						break;
+					case "normal":
+					default:
+						newEcoDoubleAppliance.setToEco(false);
+						break;
+					}
+					simulationHouse.addDoubleAppliance(newEcoDoubleAppliance);
+					break;
+				default:
+						throw new Exception("Syntax error, while reading config file!");
 				}
 			}
 			fileIn.close();
@@ -53,8 +91,11 @@ public class ConfigParser {
 		return simulationHouse;
 	}
 
-	//Internal method parsing one block of instructions and constructing appropriate Appliance object and attaching it to master House object. Throws Exception, which is handled by parseConfig method
-	private void parseBlock(String applianceName) throws Exception{
+	/*
+	 * Internal method parsing one block of instructions and constructing appropriate Appliance object and attaching it to master House object. Throws Exception, which is handled by parseConfig method.
+	 * Returns Appliance object which is created while parsing. Normal Appliances are automatically connected to the House. Attaching of the appliances forming a DoubleAppliance are is done outside of this method, so the reference to created Appliance object is needed. 
+	 */
+	private Appliance parseBlock(String applianceName) throws Exception{
 		String inputLine = null;
 		int counter = 0;
 		
@@ -89,7 +130,7 @@ public class ConfigParser {
 						maxUnitsConsumed = Float.parseFloat(splittedInstruction[1]);
 						break;					
 				case "fixed units consumed":
-						minUnitsConsumed = Float.parseFloat(splittedInstruction[1]);
+						fixedUnitsConsumed = Float.parseFloat(splittedInstruction[1]);
 						break;
 				case "probability switched on": 
 						//If its probability given in format 1 in N, split it over " in " String
@@ -153,13 +194,21 @@ public class ConfigParser {
 		case "electric":
 			newAppliance.setUtilityType("electric");
 			simulationHouse.addElectricAppliance(newAppliance);
-			break;
+			return newAppliance;
 		case "water":
 			newAppliance.setUtilityType("water");
 			simulationHouse.addWaterAppliance(newAppliance);
-			break;
+			return newAppliance;
+		case "electricdouble": 
+		case "electricitydouble": 
+			newAppliance.setUtilityType("electric");
+			return newAppliance;
+		case "waterdouble": 
+			newAppliance.setUtilityType("water");
+			return newAppliance;
 		default:
-			throw new Exception("syntax error: meter name: " + meter + " not recognised");	
+			throw new Exception("syntax error: meter name: " + meter + " not recognised");
 		}
+		
 	}
 }

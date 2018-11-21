@@ -10,7 +10,6 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		/*
 		//Default path to configuration file
 		String filePath = "config.txt";
 		int simulationLength = 7*24;
@@ -38,21 +37,6 @@ public class Main {
 		double total = myHouse.activate(simulationLength);
 		//Writes out the final cost of the running the smart house for given period.
 		System.out.println("Simulation finnished. Total cost: " + total);
-		*/
-		House myHouse = new House();
-		Appliance waterPart = new CyclicFixed("waterpart", (float) 1.0, 2);
-		Appliance electricPart = new CyclicFixed("electricpart", (float)1.0, 2);
-		Appliance ecoWaterPart = new CyclicFixed("ecowaterpart", (float) 0.5, 2);
-		Appliance ecoElectricPart = new CyclicFixed("ecoelectricpart", (float)0.5, 2);
-		
-		DoubleAppliance dishwasher = new DoubleAppliance("dishwasher", waterPart, electricPart, ecoWaterPart, ecoElectricPart);
-		myHouse.addDoubleAppliance(dishwasher);
-		myHouse.activate();
-		dishwasher.setToEco(true);
-		myHouse.activate();
-		myHouse.activate();
-		
-		
 
 	}
 }
