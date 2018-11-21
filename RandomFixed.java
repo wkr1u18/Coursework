@@ -31,7 +31,7 @@ public class RandomFixed extends Appliance {
 	@Override
 	public void timePasses() throws Exception {
 		//Take the random number from the range [0, oneInN-1] and if it's equal to 0 (event with probability 1 / oneInN) 
-		if(r.nextInt(oneInN) == 0) {
+		if(isActive()&&r.nextInt(oneInN) == 0) {
 			//Consume units if equal to zero
 			this.tellMeterToConsumeUnits(unitsUsage);
 		}

@@ -147,13 +147,15 @@ public class ConfigParser {
 				throw new Exception("syntax error: wrong name of the appliance");
 		}
 		
-		//Switch over the type of connected meter and call apropriate method on house
+		//Switch over the type of connected meter and call appropriate method on house
 		switch(meter) {
 		case "electricity":
 		case "electric":
+			newAppliance.setUtilityType("electric");
 			simulationHouse.addElectricAppliance(newAppliance);
 			break;
 		case "water":
+			newAppliance.setUtilityType("water");
 			simulationHouse.addWaterAppliance(newAppliance);
 			break;
 		default:

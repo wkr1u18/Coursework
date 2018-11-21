@@ -40,7 +40,7 @@ public class Meter {
 		if(finalCost < 0) {
 			finalCost = 0;
 		}
-		System.out.println("It costed: " + finalCost);
+		System.out.println("It cost: " + finalCost);
 		//Clear the meter
 		meterReading = 0;
 		//Returns the total cost
@@ -70,6 +70,7 @@ public class Meter {
 	protected void setMeterReading(float meterReading) {
 		this.meterReading = meterReading;
 	}
+	
 	/**
 	 * Getter to utilityName field used in overrided versions of report() to access superclass data.
 	 * @return String with the name of managed utility by the meter.

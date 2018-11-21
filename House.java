@@ -40,7 +40,23 @@ public class House {
 	 */
 	public void addElectricAppliance(Appliance newAppliance) {
 		applianceList.add(newAppliance);
-		newAppliance.setMeter(electricMeter);
+		try {
+			newAppliance.setMeter(electricMeter);
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			System.exit(0);
+		}
+	}
+	
+	/**
+	 * Overloaded version of addElectricAppliance() method, which adds ArrayList of {@link Appliance} objects to the house.
+	 * @param electricAppliances ArrayList of {@link Appliance} objects to be added to the house.
+	 */
+	public void addElectricAppliance(ArrayList<Appliance> electricAppliances) {
+		for(Appliance e: electricAppliances) {
+			this.addElectricAppliance(e);
+		}
 	}
 	
 	/**
@@ -49,8 +65,24 @@ public class House {
 	 */
 	public void addWaterAppliance(Appliance newAppliance) {
 		applianceList.add(newAppliance);
-		newAppliance.setMeter(waterMeter);
+		try {
+			newAppliance.setMeter(waterMeter);
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			System.exit(0);
+		}
 	}
+	
+	/**
+	 * Overloaded version of addWaterAppliance() method, which adds ArrayList of {@link Appliance} objects to the house.
+	 * @param waterAppliances ArrayList of {@link Appliance} objects to be added to the house.
+	 */
+	public void addWaterAppliance(ArrayList<Appliance> waterAppliances) {
+		for(Appliance w: waterAppliances) {
+			this.addWaterAppliance(w);
+		}
+	}	
 	
 	/**
 	 * Removes specified {@link Appliance} object form the house
@@ -58,6 +90,15 @@ public class House {
 	 */
 	public void removeAppliance(Appliance applianceToRemove) {
 		applianceList.remove(applianceToRemove);
+	}
+	
+	/**
+	 * Adds {@link DoubleAppliance} to the house.
+	 * @param doubleAppliance reference to {@link DoubleAppliance} object to be added to the hous
+	 */
+	public void addDoubleAppliance(DoubleAppliance doubleAppliance) {
+		this.addWaterAppliance(doubleAppliance.getWaterAppliances());
+		this.addElectricAppliance(doubleAppliance.getElectricAppliances());
 	}
 	
 	/**
@@ -88,13 +129,17 @@ public class House {
 		return totalCost;
 	}
 	
-	
+	/**
+	 * Overloaded version of activate() method which activates the house for the specified number of hours.
+	 * @param numberOfHours int specifying number of hours that will be simulated.
+	 * @return double specifying the total costs of running the house for specified period of time
+	 */
 	public double activate(int numberOfHours) {
 		double totalCost = 0;
 		for(int i = 0; i<numberOfHours; i++) {
 			try {
 				//Wait for 500 ms and then call the one-hour version of activate() method
-				Thread.sleep(500);
+				Thread.sleep(5);
 				totalCost += activate();	
 			}
 			catch(InterruptedException e) {

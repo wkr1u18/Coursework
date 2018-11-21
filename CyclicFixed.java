@@ -35,7 +35,7 @@ public class CyclicFixed extends Appliance {
 		if(internalClock == 24) {
 			internalClock = 0;
 		}
-		if(internalClock<activeHours) {
+		if(isActive() && internalClock<activeHours) {
 			this.tellMeterToConsumeUnits(unitsUsage);
 		}
 		internalClock++;

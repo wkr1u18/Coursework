@@ -45,7 +45,8 @@ public class CyclicVaries extends Appliance {
 		if(internalClock == 24) {
 			internalClock = 0;
 		}
-		if(internalClock<activeHours) {
+		
+		if(isActive() && internalClock<activeHours) {
 			float unitsConsumed = minUnitsConsumed + r.nextFloat() * (maxUnitsConsumed-minUnitsConsumed);
 			this.tellMeterToConsumeUnits(unitsConsumed);
 		}
