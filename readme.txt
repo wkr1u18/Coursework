@@ -127,3 +127,51 @@ There are two meters initialised:
 1) Meter for "water" with initial reading of 0, where one unit costs 0.002
 2) BatteryMeter for "electric" with initial reading of 0, initial mains meter reading to 0, intial battery meter reading to 0, where one unit costs 0.013 and the battery capacity is 6.0 units
 note: prices for unit are taken from coursework specification
+
+1.Extensions
+1.1 JavaDoc documentation
+
+To provide an clear and neat documentation of code, I have decide to document all the classes and their methods using Java-Doc. 
+Generated documentation is available at "doc" subfolder, as well all javaDoc tags can be seen in source files.
+
+1.2 DoubleAppliance and eco devices
+
+Inspired by coursework specification I have decided to implement simulation of devices using two types of utility (like dishwasher, which uses both electricity and water).
+I additionally have added the eco option, and the possibility to toggle between eco and normal mode in the runtime of the simulation.
+Extension doesn't affect basic functionality of the simulation, and it still meets the original coursework specification.
+
+1.2.1 Eco mode implementation
+The core of the idea is that of modelling eco mode devices two different Appliance objects are used. One for the normal mode and one for eco mode.
+If device is in one of the modes, the second Appliance must be inactive. Switching between modes is setting one Appliance object to be active and the other to be inactive.
+
+1.2.2 Toggling the Appliance's activity
+To implement that idea i have added Boolean field "active" in the Appliance class. If the object is active this value is true, otherwise is false. 
+Moreover, I added public setter and getter to that field. Appliance is normally initialised as active.
+In every subclass of the Appliance (CyclicFixed, CyclicVaries, RandomFixed and RandomVaries) i have modified the timePasses() method.
+The associated Meter object is update only when the device is active, otherwise just internal time passing is recorded.
+Updating the time allows to activate the appliances of Cyclic* subclasses to be toggled in the middle of their time cycles. 
+Knowing that all appliances are normally set as active, this extension doesn't affect normal specification of the coursework.
+
+1.2.3 EcoDevice interface
+However DoubleAppliance is the only group of devices that has eco mode so far, I have decided to separate eco mode switching from DoubleAppliance class and implement it as interface.
+EcoDevice interface provides only one method: setToEco() which takes Boolean value. It turns device into eco mode if supplied Boolean value is true, otherwise it sets into normal mode.
+
+1.2.4 General concept of DoubleAppliance
+DoubleApplaince consists of four Appliance objects. Pair of water and electric Appliances for normal mode, and other pair for eco mode. Only one pair is active at one time.
+There are two constructors - one taking two Appliances and setting the Appliance without eco mode, where toggle functions doesn't affect device behaviour.
+The other one takes four Appliance objects and allows to switch between modes. There is boolean value initialised by constructor, which is a flag whether device has eco mode.
+Also, there is another Boolean value for keeping track of current mode of the device.
+
+When a DoubleAppliance is connected to a House, its electric and water appliances are connected to House using addElectricAppliance() and addWaterAppliance(). 
+As there can be more than one electric or water devices in DoubleAppliance so the linkage to the House is done using ArrayList of Appliance objects.
+I have implemented two getter methods: one returning ArrayList of water appliances and the other one returning ArrayList of electric appliances.
+
+1.2.5 Changes to House class
+To work with ArrayLists of Appliance objects, I have created overloaded versions of addElectricDevice() and addWaterDevice(). 
+Each of them calls the add...Device() method for each of the elements of the collection.
+To toggle all house eco devices between eco and normal mode, I have additionally implemented switchToEco() method. 
+To provide working implementation of this I have added new field of the House class - an ArrayList of EcoDevice objects. 
+While adding a DoubleAppliance, besides adding it's internal Appliance objects to House, the reference to DoubleAppliance is stored in ArrayList of EcoDevices.
+
+1.2.6 Changes to the parser
+
