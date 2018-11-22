@@ -1,5 +1,6 @@
 /**
  * Interface providing setToEco() method for all appliances having eco mode. Currently it is only used by {@link DoubleAppliance}, but it makes it easier to add more eco devices in the future to the code. 
+ * Part of DoubleAppliance extnsion.
  * @author Wojciech Rozowski (wkr1u18)
  *
  */

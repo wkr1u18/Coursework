@@ -31,6 +31,7 @@ public class Meter {
 	/**
 	 * Passes the information about consumed units and the total price of units to the standard output.
 	 * After passing the information, it resets the value of the meter.
+	 * @return double primitive containing total count of spent money in given time span
 	 */
 	public double report() {
 		System.out.println(meterReading + " units of " + utilityName + " have been consumed");

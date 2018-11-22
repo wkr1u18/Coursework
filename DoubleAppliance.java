@@ -76,7 +76,7 @@ public class DoubleAppliance implements EcoDevice{
 	
 	/**
 	 * Switches the device between modes. This method toggles the active fields of all {@link Appliance} objects, which are used to model a DoubleAppliance.
-	 * @param Boolean value stating the device mode to be set. True for eco, false for non-eco mode. 
+	 * @param mode Boolean value stating the device mode to be set. True for eco, false for non-eco mode. 
 	 */
 	@Override
 	public void setToEco(Boolean mode) {

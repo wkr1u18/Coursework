@@ -218,6 +218,10 @@ public class ConfigParser {
 		
 	}
 	
+	/**
+	 * Saves all Appliances into config file.
+	 * @param fileName String containing path to output file
+	 */
 	public void saveAppliances(String fileName) {
 		try {
 			fileOut = new PrintWriter(new File (fileName));
