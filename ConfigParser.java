@@ -17,13 +17,15 @@ public class ConfigParser {
 	private House simulationHouse;
 	private PrintWriter fileOut;
 	
+	public ConfigParser(House simulationHouse) {
+		this.simulationHouse = simulationHouse;
+	}
+	
 	/**
 	 * Parses a given configuration file into {@link House} object
 	 * @param directory String containing path to configuration file formatted in coursework specification
-	 * @return {@link House} object constructed using rules from configuration file 
 	 */
-	public House parseConfig(String directory, Meter electricMeter, Meter waterMeter){
-		simulationHouse = new House(electricMeter, waterMeter);
+	public void parseConfig(String directory){
 		String inputLine = null;
 		
 		try {
@@ -90,7 +92,7 @@ public class ConfigParser {
 			System.out.println(e);
 			System.exit(0);
 		}
-		return simulationHouse;
+		//return simulationHouse;
 	}
 
 	/*
@@ -214,7 +216,7 @@ public class ConfigParser {
 		
 	}
 	
-	public void saveState(String fileName) {
+	public void saveAppliances(String fileName) {
 		try {
 			fileOut = new PrintWriter(new File (fileName));
 		}
