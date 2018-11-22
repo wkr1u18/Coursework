@@ -26,6 +26,13 @@ Valid command line options:
 -r [file] or --restore [file]: loads simulation state from state config file
 -s [file] or --save [file]: saves simulation state to state config file
 
+Example way of invoking the program:
+Run the simulation for file config.txt for 1 hour:
+java SmartHouseSimulator -i config.txt -t 1
+
+Run the simulation for file config1.txt config2.txt, save the appliances configuration to config.txt, save the output state of simulation to output_state.txt, no initial time specified - default 7*24 hours
+java SmartHouseSimulator -i config1.txt -i config2.txt -o config.txt -s output_state.txt
+
 When giving multiple input configuration files, every file name must be followed by -i. So loading configuration files config1.txt and config2.txt would need options "-i config1.txt -i config2.txt"
 If no simulation state file is provided, the basic setup of the meters is used (mentioned later).
 
