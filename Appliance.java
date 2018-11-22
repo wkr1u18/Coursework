@@ -4,9 +4,9 @@
  *
  */
 public class Appliance {
-	String name;
-	Meter meter;
-	String utilityName = null;
+	private String name;
+	private Meter meter;
+	private String utilityName = null;
 	
 	Boolean active;
 	
@@ -76,5 +76,12 @@ public class Appliance {
 	 */
 	public Boolean isActive() {
 		return active;
+	}
+	/**
+	 * Public getter to name field
+	 * @return String containing the name of Appliance
+	 */
+	public String getName() {
+		return name;
 	}
 }

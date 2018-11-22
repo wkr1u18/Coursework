@@ -98,4 +98,12 @@ public class DoubleAppliance implements EcoDevice{
 		}
 	}
 	
+	/**
+	 * Checks whether this appliance has eco mode.
+	 * @return True if has eco mode, otherwise its false
+	 */
+	public Boolean hasEco() {
+		return hasEco;
+	}
+	
 }

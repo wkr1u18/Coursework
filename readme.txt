@@ -147,10 +147,11 @@ If device is in one of the modes, the second Appliance must be inactive. Switchi
 1.2.2 Toggling the Appliance's activity
 To implement that idea i have added Boolean field "active" in the Appliance class. If the object is active this value is true, otherwise is false. 
 Moreover, I added public setter and getter to that field. Appliance is normally initialised as active.
-In every subclass of the Appliance (CyclicFixed, CyclicVaries, RandomFixed and RandomVaries) i have modified the timePasses() method.
+In every subclass of the Appliance (CyclicFixed, CyclicVaries, RandomFixed and RandomVaries) I have modified the timePasses() method.
 The associated Meter object is update only when the device is active, otherwise just internal time passing is recorded.
 Updating the time allows to activate the appliances of Cyclic* subclasses to be toggled in the middle of their time cycles. 
 Knowing that all appliances are normally set as active, this extension doesn't affect normal specification of the coursework.
+-hasEco() method
 
 1.2.3 EcoDevice interface
 However DoubleAppliance is the only group of devices that has eco mode so far, I have decided to separate eco mode switching from DoubleAppliance class and implement it as interface.
@@ -172,6 +173,21 @@ Each of them calls the add...Device() method for each of the elements of the col
 To toggle all house eco devices between eco and normal mode, I have additionally implemented switchToEco() method. 
 To provide working implementation of this I have added new field of the House class - an ArrayList of EcoDevice objects. 
 While adding a DoubleAppliance, besides adding it's internal Appliance objects to House, the reference to DoubleAppliance is stored in ArrayList of EcoDevices.
+I created two overloaded versions of removeAppliance() method: 
+- One taking ArrayList of Appliance objects, to instantly remove multiple Appliances.
+Eg. Eco and normal water appliances of some eco doubleAppliance.
+- Other one taking reference to DoubleAppliance and removing it's ecoDevice and Appliance instances from the House.
+- Overdubbed devices (changes in numAppliances method)
 
 1.2.6 Changes to the parser
+As mentioned earlier some new functionality was added to the config file parser part of the project. 
+I have splitted the headers and blocks of the config file. If the header specifies the definition of doubleappliance or ecodoubleappliance,
+then the  parser fetches accordingly 2 or 4 blocks specifying Appliance objects making appropriate DoubleAppliance. 
+If the header specifies normal Appliance ("name" command) then it fetches one block defining normal Appliance object and constructs it.
+-name scheme of appliance object making a DoubleAppliance
+
+Saving extension:
+Changes to House class:
+created getAppliances() method
+created getName() method
 

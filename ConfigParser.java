@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Class used for parsing configuration files and creating the appropriate {@link House} and {@link Appliance} objects.
@@ -34,8 +35,8 @@ public class ConfigParser {
 					break;
 				case "doubleappliance":
 					//Parse two following blocks - for water and electric part of DoubleAppliance
-					Appliance waterPart = parseBlock(splittedInstruction[1]+"water");
-					Appliance electricPart = parseBlock(splittedInstruction[1]+"electric");
+					Appliance waterPart = parseBlock(splittedInstruction[1]+"#double@w0");
+					Appliance electricPart = parseBlock(splittedInstruction[1]+"#double@e0");
 					//Create and attach the device to the house
 					DoubleAppliance newDoubleAppliance = new DoubleAppliance(splittedInstruction[1], waterPart, electricPart);
 					simulationHouse.addDoubleAppliance(newDoubleAppliance);
@@ -46,10 +47,10 @@ public class ConfigParser {
 						throw new Exception("Empty line in eco double appliance declaration");
 					}
 					//Construct all the components of the DoubleAppliance by parsing the blocks of the config file
-					Appliance waterPartNormal = parseBlock(splittedInstruction[1]+"water");
-					Appliance electricPartNormal = parseBlock(splittedInstruction[1]+"electric");
-					Appliance waterPartEco = parseBlock(splittedInstruction[1]+"waterEco");
-					Appliance electricPartEco = parseBlock(splittedInstruction[1]+"electricEco");
+					Appliance waterPartNormal = parseBlock(splittedInstruction[1]+"#ecodouble@w0");
+					Appliance electricPartNormal = parseBlock(splittedInstruction[1]+"#ecodouble@e0");
+					Appliance waterPartEco = parseBlock(splittedInstruction[1]+"#ecodouble@w1");
+					Appliance electricPartEco = parseBlock(splittedInstruction[1]+"#ecodouble@1");
 					//Create DoubleAppliance with eco mode by using overloaded constructor 
 					DoubleAppliance newEcoDoubleAppliance = new DoubleAppliance(splittedInstruction[1], waterPartNormal, electricPartNormal, waterPartEco, electricPartEco);
 					
@@ -209,5 +210,12 @@ public class ConfigParser {
 			throw new Exception("syntax error: meter name: " + meter + " not recognised");
 		}
 		
+	}
+	
+	public void saveState() {
+		ArrayList<Appliance> houseAppliances = simulationHouse.getAppliances();
+		for(Appliance a : houseAppliances) {
+			System.out.println(a.getName());
+		}
 	}
 }

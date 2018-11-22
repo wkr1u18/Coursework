@@ -12,6 +12,9 @@ public class House {
 	private ArrayList<Appliance> applianceList;
 	private ArrayList<EcoDevice> ecoDevices;
 	
+	//Keeps track of overdubbed appliances (if device consists of four appliances this variable should be increased by 3 )
+	private int virtualAppliances; 
+	
 	/**
 	 * Constructor creating House object and initialising it's {@link Meter} objects using given references.
 	 * @param electricMeter reference to {@link Meter} object measuring the electricity usage
@@ -24,6 +27,7 @@ public class House {
 		//Creates empty ArrayList for storing Appliance objects
 		applianceList = new ArrayList<Appliance>();
 		ecoDevices = new ArrayList<EcoDevice>();
+		virtualAppliances = 0;
 	}
 	
 	/**
@@ -86,6 +90,24 @@ public class House {
 	}	
 	
 	/**
+	 * Adds {@link DoubleAppliance} to the house.
+	 * @param newAppliance reference to {@link DoubleAppliance} object to be added to the hous
+	 */
+	public void addDoubleAppliance(DoubleAppliance newAppliance) {
+		ecoDevices.add(newAppliance);
+		if(newAppliance.hasEco()) {
+			//Eco DoubleAppliance consists of four Appliance objects so there are three virtual (overdubbed) appliances
+			virtualAppliances += 3;
+		} 
+		else {
+			//Normal DoubleAppliance consists of two Appliance objects so there is one virtual (overdubbed) appliance
+			virtualAppliances += 1;
+		}
+		this.addWaterAppliance(newAppliance.getWaterAppliances());
+		this.addElectricAppliance(newAppliance.getElectricAppliances());
+	}
+	
+	/**
 	 * Removes specified {@link Appliance} object form the house
 	 * @param applianceToRemove {@link Appliance} to be removed from house
 	 */
@@ -94,13 +116,23 @@ public class House {
 	}
 	
 	/**
-	 * Adds {@link DoubleAppliance} to the house.
-	 * @param doubleAppliance reference to {@link DoubleAppliance} object to be added to the hous
+	 * Removes all the {@link Appliance} objects from given ArrayList from the house.
+	 * @param appliancesToRemove ArrayList of {@link Appliance} objects to be removed from the house
 	 */
-	public void addDoubleAppliance(DoubleAppliance doubleAppliance) {
-		ecoDevices.add(doubleAppliance);
-		this.addWaterAppliance(doubleAppliance.getWaterAppliances());
-		this.addElectricAppliance(doubleAppliance.getElectricAppliances());
+	public void removeAppliance(ArrayList<Appliance> appliancesToRemove){
+		for(Appliance a : appliancesToRemove) {
+			removeAppliance(a);
+		}
+	}
+	
+	/**
+	 * Removes specified {@link DoubleAppliance} object from the house
+	 * @param applianceToRemove reference to {@link DoubleAppliance} object to be removed from the house
+	 */
+	public void removeAppliance(DoubleAppliance applianceToRemove) {
+		ecoDevices.remove(applianceToRemove);
+		removeAppliance(applianceToRemove.getElectricAppliances());
+		removeAppliance(applianceToRemove.getWaterAppliances());
 	}
 	
 	/**
@@ -108,7 +140,7 @@ public class House {
 	 * @return int containing the amount of installed {@link Appliance} object in the house.
 	 */
 	public int numAppliances() {
-		return applianceList.size();
+		return applianceList.size() - virtualAppliances;
 	}
 	
 	/**
@@ -159,5 +191,13 @@ public class House {
 		for(EcoDevice e : ecoDevices) {
 			e.setToEco(mode);
 		}
+	}
+	
+	/**
+	 * Public getter to internal ArrayList of {@link Appliance} objects managed by house.
+	 * @return ArrayList of {@link Appliance} objects stored in instance of House class
+	 */
+	public ArrayList<Appliance> getAppliances() {
+		return applianceList;
 	}
 }

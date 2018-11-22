@@ -1,4 +1,13 @@
-ecodoubleappliance: DishWasher
+name: sth2
+subclass: CyclicFixed
+meter: electric
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 3
+Probability switched on:
+Cycle length: 24/24
+
+ecodoubleappliance: Dishwasher
 mode: normal
 subclass: CyclicFixed
 meter: waterdouble
@@ -26,6 +35,32 @@ Cycle length: 24/24
 
 subclass: CyclicFixed
 meter: electricdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 3
+Probability switched on:
+Cycle length: 24/24
+
+doubleappliance: Dishwasher2
+subclass: CyclicFixed
+meter: waterdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 6
+Probability switched on:
+Cycle length: 24/24
+
+subclass: CyclicFixed
+meter: electricdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 6
+Probability switched on:
+Cycle length: 24/24
+
+name: sth2
+subclass: CyclicFixed
+meter: electric
 Min units consumed:
 Max units consumed:
 Fixed units consumed: 3
