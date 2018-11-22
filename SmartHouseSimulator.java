@@ -159,6 +159,7 @@ public class SmartHouseSimulator {
 			myParser.saveAppliances(outputFile);
 		}
 		
+		//Saves the simulation state
 		if(save) {
 			manager.saveState(savePath, total, simulationLength);
 		}
