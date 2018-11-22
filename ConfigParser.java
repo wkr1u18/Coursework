@@ -74,6 +74,8 @@ public class ConfigParser {
 					}
 					simulationHouse.addDoubleAppliance(newEcoDoubleAppliance);
 					break;
+				case "":
+					break;
 				default:
 						throw new Exception("Syntax error, while reading config file!");
 				}

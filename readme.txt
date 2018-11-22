@@ -7,6 +7,7 @@ Completed parts of the coursework: Parts 1-7
 Extensions to the coursework: 
 1) JavaDoc documentation (which can be found in the doc subfolder)
 2) Added the simulation of appliances using both electricity and water. Additionally added the functionality for devices with eco mode. (extension discussed later)
+3) It is possible to load multiple config files, merge them and save the state of the appliances into the config files 
 
 0.2 Command line usage:
 To run the simulations, there must be provided a configuration file in format specified in the documentation. 
