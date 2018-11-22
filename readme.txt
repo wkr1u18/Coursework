@@ -7,16 +7,27 @@ Completed parts of the coursework: Parts 1-7
 Extensions to the coursework: 
 1) JavaDoc documentation (which can be found in the doc subfolder)
 2) Added the simulation of appliances using both electricity and water. Additionally added the functionality for devices with eco mode. (extension discussed later)
-3) It is possible to load multiple config files, merge them and save the state of the appliances into the config files 
+3) Multiple config files loading, merging them and saving the state of the appliances into the config files
+4) Simulation state saving and restoring to simulation state config files
+
+NOTE: All the extensions do not interfere with basic specification of the coursework.
 
 0.2 Command line usage:
 To run the simulations, there must be provided a configuration file in format specified in the documentation. 
 It is possible to specify exact time span of time span to be simulated, but when it is not specified the default value of one week (7*24 hours) is used.
 
-Valid formats:
-java SmartHouseSimulator [config file path] [time in hours to simulate] - opens specified config file and runs the simulation for the specified number of hours
-java SmartHouseSimulator [config file path] - opens specified config file and runs the simulation for time span of one week (7*24 hours)
-java SmartHouseSimulator - looks for config.txt file in the same folder and runs the simulation for the time span of one week (7*24 hours) (Mostly used for testing purpuoses in Eclipse project)
+Valid command line options: 
+-i [file] or --input [file] : reads appliance configuration from [file]
+-o [file] or --output [file] : saves appliance configuration to [file]
+-t [hours] or --time [houes] : runs the simulation for given amount of hours
+-m or --merge : merges input appliance configuration files into one output file
+-e or --eco : switches devices with eco mode to power saving mode
+-n or --normal : switches devices with eco mode to normal mode
+-r [file] or --restore [file]: loads simulation state from state config file
+-s [file] or --save [file]: saves simulation state to state config file
+
+When giving multiple input configuration files, every file name must be followed by -i. So loading configuration files config1.txt and config2.txt would need options "-i config1.txt -i config2.txt"
+If no simulation state file is provided, the basic setup of the meters is used (mentioned later).
 
 0.3 Configuration file format
 
@@ -129,11 +140,46 @@ There are two meters initialised:
 2) BatteryMeter for "electric" with initial reading of 0, initial mains meter reading to 0, intial battery meter reading to 0, where one unit costs 0.013 and the battery capacity is 6.0 units
 note: prices for unit are taken from coursework specification
 
+0.5 Simulation state config file format
+Also as the config file format, the simulation state files consist of headers and blocks. Every line of the spec must contain two parts: name of the field and the value separated by colon and space.
+
+0.5.1 Headers
+1) time: 456 - sets the initial time of the simulation to 456 hours
+2) cost: 2137.0 - sets the initial cost of previous simulation to 2137.0
+3) meter: water - introduces the block for Meter object for water (can also mainain electric)
+4) batterymeter - introduces the block for BatteryMeter object for electric (BatteryMeter cannot work with water)
+
+0.5.2 Blocks
+0.5.2.1 Meter block - initialises all the fields of Meter constructor
+Example:
+unitcost: 1.0
+meterreading: 0.0
+0.5.2.2 BatteryMeter block - initialises all the fields of overloaded BatteryMeter constructor, which also initialises starting capacity of Battery
+unitcost: 2.0
+meterreading: 0
+batterymeterreading: 37.0
+batterycapacity: 8.0
+batterybalance: 0
+
+0.5.3 Valid simulation state configuration file example:
+time: 456
+cost: 2137
+meter: water
+unitcost: 1.0
+meterreading: 0.0
+batterymeter: electric
+unitcost: 2.0
+meterreading: 0
+batterymeterreading: 37.0
+batterycapacity: 8.0
+batterybalance: 0
+
 1.Extensions
 1.1 JavaDoc documentation
 
 To provide an clear and neat documentation of code, I have decide to document all the classes and their methods using Java-Doc. 
-Generated documentation is available at "doc" subfolder, as well all javaDoc tags can be seen in source files.
+Generated documentation is available at "doc" subfolder, as well all javaDoc tags can be seen in source files. 
+All the methods off the specification have highlighed information about the extension they implement.
 
 1.2 DoubleAppliance and eco devices
 
@@ -151,8 +197,8 @@ Moreover, I added public setter and getter to that field. Appliance is normally 
 In every subclass of the Appliance (CyclicFixed, CyclicVaries, RandomFixed and RandomVaries) I have modified the timePasses() method.
 The associated Meter object is update only when the device is active, otherwise just internal time passing is recorded.
 Updating the time allows to activate the appliances of Cyclic* subclasses to be toggled in the middle of their time cycles. 
+DoubleAppliance has also hasEco() method, which returns true when it was initalised with eco mode.
 Knowing that all appliances are normally set as active, this extension doesn't affect normal specification of the coursework.
--hasEco() method
 
 1.2.3 EcoDevice interface
 However DoubleAppliance is the only group of devices that has eco mode so far, I have decided to separate eco mode switching from DoubleAppliance class and implement it as interface.
@@ -178,31 +224,66 @@ I created two overloaded versions of removeAppliance() method:
 - One taking ArrayList of Appliance objects, to instantly remove multiple Appliances.
 Eg. Eco and normal water appliances of some eco doubleAppliance.
 - Other one taking reference to DoubleAppliance and removing it's ecoDevice and Appliance instances from the House.
-- Overdubbed devices (changes in numAppliances method)
+Moreover I have modified numAppliances method to substract "virtual" devices - eg. if we have one eco mode DoubleAppliance, one normal Double Appliance, then numAppliances would return 6.
+Knowing the number of virtual appliances which compose each DoubleAppliance, we can keep track of them and substract their amount from size of ArrayList of Appliance objects stored in House objects.
+For the previous examples modified method, now returns two.
+
 
 1.2.6 Changes to the parser
 As mentioned earlier some new functionality was added to the config file parser part of the project. 
 I have splitted the headers and blocks of the config file. If the header specifies the definition of doubleappliance or ecodoubleappliance,
 then the  parser fetches accordingly 2 or 4 blocks specifying Appliance objects making appropriate DoubleAppliance. 
 If the header specifies normal Appliance ("name" command) then it fetches one block defining normal Appliance object and constructs it.
--name scheme of appliance object making a DoubleAppliance
 
-Saving extension:
-Changes to House class:
+1.2.7 Name scheme of appliance objects making a DoubleAppliance
+1) If we have DoubleAppliance called "dishwasher" with eco mode (consisting of 4 virtual appliances) the naming scheme is as follows:
+Water part normal mode - #ecodouble@w0
+Electric part normal mode - #ecodouble@e0
+Water part normal mode - #ecodouble@w1
+Electric part normal mode - #ecodouble@e1
 
-created getAppliances() method
+2) If we have DoubleAppliance called "dishwasher" without eco mode (consisting of 2 virtual appliances) the naming scheme is as follows:
+Water part normal mode - #double@w0
+Electric part normal mode - #double@e0
 
+2.0 Configuration saving and merging extension
+2.1 Main information
+It is now possible to download the state of the House and save it into valid configuration file. To make it possible I needed to add accessor method to different fields of Appliances and House fields.
+Also, I have made it possible to read multiple files. So parsing two files and saving them into one output makes it possible to merge them into one config file. When passed -m or --merge option,
+simulation isn't started but only data operations on appliances are performed.
 
-Changes to parser:
-writeBlock()
+2.2 Changes to House class:
+- created getAppliances() method which returns stored ArrayList of Appliance objects
+- changed numAppliances method to substract virtual overdubbed Apppliance objects coming from DoubleAppliance 
 
-Changes to appliances:
-created getName() method
+2.3 Changes to parser
+- created writeBlock() method which parses one Appliance block and saves into file.
+- created saveAppliances(0 which parses all Appliance objects and creates appropriate headers and blocks 
 
-CyclicFixed:
-getUnitsUsage()
-getActiveHours()
+2.4 Changes to appliances:
+- added getter methods to main fields of Appliances:
+ +getMinConsumption()
+ +getMaxConsumption()
+ +getFixedConsumption()
+ +getName()
+ +getOneInN()
+ +getUtilityType()
 
+They return Float, Double and Integer objects instead of primitives, as in non-overrided they can return null value, which can be reckognized by output parser.
 
+3.0 Simulation saving and restoring extension
+3.1 Overview
+I have created SimulationStateManager which can read and output configuration files. I added public accesors to fields of Meters to get their final states at the end of simulation (to save them).
+Now it is possible to set starting time of simulation (different time of a day, depending in the moment when simulation was stopped). Main house object is maintained by that class.
 
+3.1 Changes to House class
+-added setTime() which sets initial time for all connected Appliances of the day for simulation
 
+3.2 Changes to Appliance class
+- added setTime() method which sets the internal clock of given appliance to given time of a day. This method is overrided and implemented in children classes.
+
+3.3 Changes to Meter class
+- getMeterReading(), getUnitCost() and getUtilityName() are now public methods (instead of protected visibility, as they were used before only by overrided report() method)
+
+3.4 Changes to BatteryMeter
+- added new constructor which also takes initial battery balance

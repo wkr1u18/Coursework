@@ -115,4 +115,36 @@ Fixed units consumed:
 Probability switched on: 1 in 2
 Cycle length: 
 
+ecodoubleappliance: DishWasher
+mode: normal
+subclass: CyclicFixed
+meter: waterdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 6
+Probability switched on:
+Cycle length: 24/24
 
+subclass: CyclicFixed
+meter: electricdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 6
+Probability switched on:
+Cycle length: 24/24
+
+subclass: CyclicFixed
+meter: waterdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 3
+Probability switched on:
+Cycle length: 24/24
+
+subclass: CyclicFixed
+meter: electricdouble
+Min units consumed:
+Max units consumed:
+Fixed units consumed: 3
+Probability switched on:
+Cycle length: 24/24
