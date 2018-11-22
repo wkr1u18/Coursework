@@ -43,6 +43,14 @@ public class Battery {
 	}
 	
 	/**
+	 * Gets the capacity limit of the battery. part of simulation saving extension.
+	 * @return float containing capacity limit of the battery
+	 */
+	public float getCapacityLimit() {
+		return capacityLimit;
+	}
+	
+	/**
 	 * Takes a given amount of units from the battery.
 	 * @param numberOfUnits float describing the amount of units to be taken from battery's balance.
 	 * @throws IllegalArgumentException if the amount of units to be taken is greater than the balance of the battery.

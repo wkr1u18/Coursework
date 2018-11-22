@@ -173,7 +173,7 @@ public class House {
 		for(int i = 0; i<numberOfHours; i++) {
 			try {
 				//Wait for 500 ms and then call the one-hour version of activate() method
-				Thread.sleep(5);
+				Thread.sleep(500);
 				totalCost += activate();	
 			}
 			catch(InterruptedException e) {
@@ -199,5 +199,16 @@ public class House {
 	 */
 	public ArrayList<Appliance> getAppliances() {
 		return applianceList;
+	}
+	
+	/**
+	 * Sets the time of internal clocks of all {@link Appliance} objects.
+	 * Part of simulation restoring extension
+	 * @param numOfHours int primitive stating the number of hour to shift from initial state
+	 */
+	public void setTime(int numOfHours) {
+		for(Appliance a: applianceList) {
+			a.setTime(numOfHours);
+		}
 	}
 }

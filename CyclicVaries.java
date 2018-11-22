@@ -76,5 +76,13 @@ public class CyclicVaries extends Appliance {
 	public Integer getCycleLength() {
 		return activeHours;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setTime(int numOfHours) {
+		internalClock = numOfHours%24;
+	}
 }
 

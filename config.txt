@@ -1,8 +1,8 @@
 name: Lights
-subclass: CyclicFixed
-meter: electric
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 6
+subclass: CyclicVaries
+meter: water
+Min units consumed: 1
+Max units consumed: 5
+Fixed units consumed: 
 Probability switched on:
-Cycle length: 24/24
+Cycle length: 5/24

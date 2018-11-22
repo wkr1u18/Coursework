@@ -48,34 +48,35 @@ public class Meter {
 	}
 	
 	/**
-	 * Getter to meterReading field used in overrided versions of report() to access superclass data.
+	 * Getter to utilityName field used in overrided versions of report() to access superclass data, used also in simulation saving extension.
+	 * @return String with the name of managed utility by the meter.
+	 */
+	public String getUtilityName() {
+		return utilityName;
+	}
+	
+	/**
+	 * Getter to meterReading field used in overrided versions of report() to access superclass data, used also in simulation saving extension.
 	 * @return float stating the meter reading in units
 	 */
-	protected float getMeterReading() {
+	public float getMeterReading() {
 		return meterReading;
 	}
 	
 	/**
-	 * Getter to unitCost field used in overrided versions of report() to access superclass data.
-	 * @return double stating the price of unit managed by the meter
-	 */
-	protected double getUnitCost() {
-		return unitCost;
-	}
-	
-	/**
-	 * Setter to meterReading field used in overrided versions of report to access superclass data.
+	 * Setter to meterReading field used in overrided versions of report to access superclass data, used also in simulation saving extension.
 	 * @param meterReading float describing new state of meter reading
 	 */
-	protected void setMeterReading(float meterReading) {
+	public void setMeterReading(float meterReading) {
 		this.meterReading = meterReading;
 	}
 	
 	/**
-	 * Getter to utilityName field used in overrided versions of report() to access superclass data.
-	 * @return String with the name of managed utility by the meter.
+	 * Getter to unitCost field used in overrided versions of report() to access superclass data, used also in simulation saving extension.
+	 * @return double stating the price of unit managed by the meter
 	 */
-	protected String getUtilityName() {
-		return utilityName;
+	public double getUnitCost() {
+		return unitCost;
 	}
+	
 }

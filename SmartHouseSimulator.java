@@ -16,6 +16,10 @@ public class SmartHouseSimulator {
 		String outputFile = null;
 		Boolean toEco = false;
 		Boolean toNormal = false;
+		Boolean restore = false;
+		String restorePath = null;
+		Boolean save = false;
+		String savePath = null;
 		//Default path to configuration file
 		String filePath = "config.txt";
 		int simulationLength = 7*24;
@@ -65,6 +69,28 @@ public class SmartHouseSimulator {
 					case "--normal":
 						toNormal = true;
 						break;
+					case "-r":
+					case "--restore":
+						if((i+1)<args.length) {
+							restorePath = args[++i];
+							restore = true;
+						}
+						else {
+							System.out.println("Invalid syntax!");
+							System.exit(0);
+						}
+						break;
+					case "-s":
+					case "--save":
+						if((i+1)<args.length) {
+							savePath = args[++i];
+							save = true;
+						}
+						else {
+							System.out.println("Invalid syntax!");
+							System.exit(0);
+						}
+						break;
 					case "-h":
 					case "--help":
 					default:
@@ -76,6 +102,8 @@ public class SmartHouseSimulator {
 						System.out.println("-m or --merge : merges input appliance configuration files into one output file");
 						System.out.println("-e or --eco : switches devices with eco mode to power saving mode");
 						System.out.println("-n or --normal : switches devices with eco mode to normal mode");
+						System.out.println("-r [file] or --restore [file]: loads simulation state from state config file");
+						System.out.println("-s [file] or --save [file]: saves simulation state to state config file");
 						System.exit(0);
 				}
 				i++;
@@ -87,11 +115,17 @@ public class SmartHouseSimulator {
 			System.out.println("To find out about all possible command line options use -h or --help");
 		}
 
-		//Parses the configuration file and starts the simulation
-		
-		Meter waterMeter = new Meter("water", (float) 0.002, 0);
-		BatteryMeter electricMeter = new BatteryMeter("electric", (double) 0.013, (float) 0, (float) 0, (float) 6.0);
-		House myHouse = new House(electricMeter, waterMeter);
+		//Depending on the command line options - parses the simulation configuration file or sets default values for simulation
+		SimulationStateManager manager;
+		if(restore) {
+			manager = new SimulationStateManager(restorePath);
+		}
+		else {
+			manager = new SimulationStateManager();
+		}
+		House myHouse = manager.getHouse();
+		System.out.println("Starting simulation with initial time: " + manager.getInitialTime() + " hours.");
+		myHouse.setTime(manager.getInitialTime());
 		
 		//Reads appliance configuration files
 		ConfigParser myParser = new ConfigParser(myHouse);
@@ -105,21 +139,28 @@ public class SmartHouseSimulator {
 			}
 		}
 		
+		//Runs the simulation in eco or normal mode
 		if(toEco ^ toNormal) {
 			myHouse.switchToEco(toEco);
 		}
 		
-		
+		double total = 0;
 		//Performs the simulation
 		if(simulationLength>0) {
-			double total = myHouse.activate(simulationLength);
+			total = myHouse.activate(simulationLength);
+			if(restore) {
+				total += manager.getInitialCost();
+			}
 			System.out.println("Simulation finnished. Total cost: " + total);
 		}
-		
 		
 		//Saves the appliances configurations
 		if(outputFile!=null) {
 			myParser.saveAppliances(outputFile);
+		}
+		
+		if(save) {
+			manager.saveState(savePath, total, simulationLength);
 		}
 
 	}
