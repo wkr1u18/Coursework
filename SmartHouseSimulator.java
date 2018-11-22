@@ -14,6 +14,8 @@ public class SmartHouseSimulator {
 
 		ArrayList<String> inputFiles = new ArrayList<String>();
 		String outputFile = null;
+		Boolean toEco = false;
+		Boolean toNormal = false;
 		//Default path to configuration file
 		String filePath = "config.txt";
 		int simulationLength = 7*24;
@@ -55,6 +57,14 @@ public class SmartHouseSimulator {
 					case "--merge":
 						simulationLength = 0;
 						break;
+					case "-e":
+					case "--eco":
+						toEco = true;
+						break;
+					case "-n":
+					case "--normal":
+						toNormal = true;
+						break;
 					case "-h":
 					case "--help":
 					default:
@@ -64,6 +74,8 @@ public class SmartHouseSimulator {
 						System.out.println("-o [file] or --output [file] : saves appliance configuration to [file]");
 						System.out.println("-t [hours] or --time [houes] : runs the simulation for given amount of hours");
 						System.out.println("-m or --merge : merges input appliance configuration files into one output file");
+						System.out.println("-e or --eco : switches devices with eco mode to power saving mode");
+						System.out.println("-n or --normal : switches devices with eco mode to normal mode");
 						System.exit(0);
 				}
 				i++;
@@ -91,6 +103,10 @@ public class SmartHouseSimulator {
 			for(String s : inputFiles) {
 				myParser.parseConfig(s);
 			}
+		}
+		
+		if(toEco ^ toNormal) {
+			myHouse.switchToEco(toEco);
 		}
 		
 		
