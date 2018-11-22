@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class ConfigParser {
 	private BufferedReader fileIn;
 	private House simulationHouse;
+	private PrintWriter fileOut;
 	
 	/**
 	 * Parses a given configuration file into {@link House} object
@@ -212,46 +214,77 @@ public class ConfigParser {
 		
 	}
 	
-	public void saveState() {
-		ArrayList<Appliance> houseAppliances = simulationHouse.getAppliances();
-		for(Appliance a : houseAppliances) {
-			System.out.println("name: "+a.getName());
-			writeBlock(a);
+	public void saveState(String fileName) {
+		try {
+			fileOut = new PrintWriter(new File (fileName));
 		}
+		catch (FileNotFoundException e) {
+			System.out.println(e);
+		}
+		
+		ArrayList<Appliance> houseAppliances = simulationHouse.getAppliances();
+		String name = null;
+		String type = null;
+		for(Appliance a : houseAppliances) {
+			name = a.getName();
+			if(name.indexOf("#")>0) {
+				if(name.endsWith("#double@w0")) {
+					fileOut.println("doubleappliance: " + name.split("#")[0]);
+				} else if (name.endsWith("#ecodouble@w0")) {
+					fileOut.println("ecodubleappliance: " +  name.split("#")[0]);
+					//If normal water appliance is active, then device is in non-eco mode
+					fileOut.print("mode: ");
+					if(a.isActive()) {
+						fileOut.println("normal");
+					}
+					else {
+						fileOut.println("eco");
+					}
+				}
+				type = a.getUtilityType();
+				writeBlock(a, type+"double");
+			}
+			else {
+				fileOut.println("name: " + name);
+				writeBlock(a);
+			}
+			
+		}
+		fileOut.close();
 	}
 	
 	/*
 	 * Writes one block describing one Appliance object. When passed null as any argument, certain field is just skipped.
 	 */
 	private void writeBlock(String subclass, String meter, Float minConsumption, Float maxConsumption, Float fixedConsumption, Integer oneInN, Integer cycleLength) {
-		System.out.println("subclass: "+subclass);
-		System.out.println("meter: "+meter);
-		System.out.print("Min units consumed: ");
+		fileOut.println("subclass: "+subclass);
+		fileOut.println("meter: "+meter);
+		fileOut.print("Min units consumed: ");
 		if(minConsumption!=null ) {
-			System.out.print(minConsumption.toString());
+			fileOut.print(minConsumption.toString());
 		}
-		System.out.println();
-		System.out.print("Max units consumed: ");
+		fileOut.println();
+		fileOut.print("Max units consumed: ");
 		if(maxConsumption!=null ) {
-			System.out.print(maxConsumption.toString());
+			fileOut.print(maxConsumption.toString());
 		}
-		System.out.println();
-		System.out.print("Fixed units consumed: ");
+		fileOut.println();
+		fileOut.print("Fixed units consumed: ");
 		if(fixedConsumption!=null ) {
-			System.out.print(fixedConsumption.toString());
+			fileOut.print(fixedConsumption.toString());
 		}
-		System.out.println();
-		System.out.print("Probability switched on: ");
+		fileOut.println();
+		fileOut.print("Probability switched on: ");
 		if(oneInN!=null ) {
-			System.out.print("1 in " + oneInN);
+			fileOut.print("1 in " + oneInN);
 		}
-		System.out.println();
-		System.out.print("Cycle length: ");
+		fileOut.println();
+		fileOut.print("Cycle length: ");
 		if(cycleLength!=null) {
-			System.out.print(cycleLength+"/24");
+			fileOut.print(cycleLength+"/24");
 		}
-		System.out.println();
-		System.out.println();
+		fileOut.println();
+		fileOut.println();
 	}
 	
 	/*
