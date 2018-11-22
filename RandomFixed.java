@@ -36,4 +36,20 @@ public class RandomFixed extends Appliance {
 			this.tellMeterToConsumeUnits(unitsUsage);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Float getFixedUnitsUsage() {
+		return unitsUsage;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer getOneInN() {
+		return oneInN;
+	}
 }

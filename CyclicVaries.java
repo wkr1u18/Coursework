@@ -52,5 +52,29 @@ public class CyclicVaries extends Appliance {
 		}
 		internalClock++;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Float getMinConsumption() {
+		return minUnitsConsumed;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Float getMaxConsumption() {
+		return maxUnitsConsumed;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer getCycleLength() {
+		return activeHours;
+	}
 }
 

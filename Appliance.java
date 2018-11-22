@@ -63,6 +63,14 @@ public class Appliance {
 	}
 	
 	/**
+	 * Gets the name of the utility that is used by that Appliance.
+	 * @return String containing name of the utility
+	 */
+	public String getUtilityType() {
+		return utilityName;
+	}
+	
+	/**
 	 * Sets the appliance's status - whether it is active or not. If device is not active, then calling timePasses() won't update meters.
 	 * @param active Boolean value describing status of the device. True stands for active.
 	 */
@@ -83,5 +91,45 @@ public class Appliance {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Gets fixed unit consumption of the Appliance.
+	 * @return Float object containing fixed unit consumption of the Appliance. Null value is returned when this doesn't apply to specified type of Appliance.
+	 */
+	public Float getFixedUnitsUsage() {
+		return null;
+	}
+	
+	/**
+	 * Gets cycle length of the Appliance.
+	 * @return Integer object containing cycle length of the Appliance. Null value is returned when this doesn't apply to specified type of Appliance.
+	 */
+	public Integer getCycleLength() {
+		return null;
+	}
+	
+	/**
+	 * Gets minimal unit consumption of the Appliance.
+	 * @return Float object containing minimal unit consumption of the Appliance. Null value is returned when this doesn't apply to specified type of Appliance.
+	 */
+	public Float getMinConsumption() {
+		return null;
+	}
+	
+	/**
+	 * Gets maximal unit consumption of the Appliance.
+	 * @return Float object containing maximal unit consumption of the Appliance. Null value is returned when this doesn't apply to specified type of Appliance.
+	 */
+	public Float getMaxConsumption() {
+		return null;
+	}
+	
+	/**
+	 * Gets 1 in N probability of the Appliance being active.
+	 * @return Integer object containing m1 in N probability of the Appliance being active. Null value is returned when this doesn't apply to specified type of Appliance.
+	 */
+	public Integer getOneInN() {
+		return null;
 	}
 }

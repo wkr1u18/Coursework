@@ -47,4 +47,28 @@ public class RandomVaries extends Appliance {
 			this.tellMeterToConsumeUnits(unitsConsumed);
 		}
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Float getMinConsumption() {
+		return minUnitsConsumed;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Float getMaxConsumption() {
+		return maxUnitsConsumed;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer getOneInN() {
+		return oneInN;
+	}
 }

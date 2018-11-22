@@ -215,7 +215,67 @@ public class ConfigParser {
 	public void saveState() {
 		ArrayList<Appliance> houseAppliances = simulationHouse.getAppliances();
 		for(Appliance a : houseAppliances) {
-			System.out.println(a.getName());
+			System.out.println("name: "+a.getName());
+			writeBlock(a);
 		}
+	}
+	
+	/*
+	 * Writes one block describing one Appliance object. When passed null as any argument, certain field is just skipped.
+	 */
+	private void writeBlock(String subclass, String meter, Float minConsumption, Float maxConsumption, Float fixedConsumption, Integer oneInN, Integer cycleLength) {
+		System.out.println("subclass: "+subclass);
+		System.out.println("meter: "+meter);
+		System.out.print("Min units consumed: ");
+		if(minConsumption!=null ) {
+			System.out.print(minConsumption.toString());
+		}
+		System.out.println();
+		System.out.print("Max units consumed: ");
+		if(maxConsumption!=null ) {
+			System.out.print(maxConsumption.toString());
+		}
+		System.out.println();
+		System.out.print("Fixed units consumed: ");
+		if(fixedConsumption!=null ) {
+			System.out.print(fixedConsumption.toString());
+		}
+		System.out.println();
+		System.out.print("Probability switched on: ");
+		if(oneInN!=null ) {
+			System.out.print("1 in " + oneInN);
+		}
+		System.out.println();
+		System.out.print("Cycle length: ");
+		if(cycleLength!=null) {
+			System.out.print(cycleLength+"/24");
+		}
+		System.out.println();
+		System.out.println();
+	}
+	
+	/*
+	 * Creates an output block from given Appliance and sets it's meter name to given one 
+	 */
+	private void writeBlock(Appliance appliance, String meterName) {
+		String subclassName = null;
+		if(appliance instanceof CyclicFixed) {
+			subclassName = "CyclicFixed";
+		} else if (appliance instanceof CyclicVaries) {
+			subclassName = "CyclicVaries";
+		} else if (appliance instanceof RandomFixed) {
+			subclassName = "RandomFixed";
+		} else if (appliance instanceof RandomVaries) {
+			subclassName = "RandomVaries";
+		}
+		
+		writeBlock(subclassName, meterName, appliance.getMinConsumption(), appliance.getMaxConsumption(), appliance.getFixedUnitsUsage(), appliance.getOneInN(), appliance.getCycleLength());
+	}
+	/*
+	 * Creates an output block describing given Appliance using it's internal meter name. 
+	 * This is default way of building block for standard appliances. Different meter name is used when dealing with DoubleAppliances.
+	 */
+	private void writeBlock(Appliance appliance) {
+		writeBlock(appliance, appliance.getUtilityType());
 	}
 }

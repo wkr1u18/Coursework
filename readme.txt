@@ -188,6 +188,20 @@ If the header specifies normal Appliance ("name" command) then it fetches one bl
 
 Saving extension:
 Changes to House class:
+
 created getAppliances() method
+
+
+Changes to parser:
+writeBlock()
+
+Changes to appliances:
 created getName() method
+
+CyclicFixed:
+getUnitsUsage()
+getActiveHours()
+
+
+
 

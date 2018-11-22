@@ -40,4 +40,20 @@ public class CyclicFixed extends Appliance {
 		}
 		internalClock++;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Float getFixedUnitsUsage() {
+		return unitsUsage;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer getCycleLength() {
+		return activeHours;
+	}
 }
