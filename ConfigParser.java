@@ -275,6 +275,7 @@ public class ConfigParser {
 		String type = null;
 		for(Appliance a : houseAppliances) {
 			name = a.getName();
+			//If a is part of double appliance, write a header for it and then proceed to decoding its blocks
 			if(name.indexOf("#")>0) {
 				if(name.endsWith("#double@w0")) {
 					fileOut.println("doubleappliance: " + name.split("#")[0]);
