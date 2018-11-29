@@ -107,12 +107,25 @@ public class ConfigParser {
 		
 		//Variables used while creating new Appliances
 		String meter = "";
+		Boolean hasMeter = false;
+		
 		String subclass = "";
+		Boolean hasSubclass = false;
+		
 		float minUnitsConsumed = 0;
+		Boolean hasMinUnits = false;
+		
 		float maxUnitsConsumed = 0;
+		Boolean hasMaxUnits = false;
+		
 		float fixedUnitsConsumed = 0;
+		Boolean hasFixedUnits = false;
+		
 		int oneInN = 0;
-		int cycleLength = 0 ;
+		Boolean hasOneInN = false;
+		
+		int cycleLength = 0;
+		Boolean hasCycleLength = false;
 		
 		try {
 			while(counter<8 && (inputLine = fileIn.readLine()) != null)
@@ -125,24 +138,30 @@ public class ConfigParser {
 					switch(splittedInstruction[0].toLowerCase()) {
 				case "subclass":
 						subclass = splittedInstruction[1];
+						hasSubclass = true;
 						break;
 				case "meter":
 						meter = splittedInstruction[1];
+						hasMeter = true;
 						break;
 				case "min units consumed":
 						minUnitsConsumed = Float.parseFloat(splittedInstruction[1]);
+						hasMinUnits = true;
 						break;
 				case "max units consumed":
 						maxUnitsConsumed = Float.parseFloat(splittedInstruction[1]);
+						hasMaxUnits = true;
 						break;					
 				case "fixed units consumed":
 						fixedUnitsConsumed = Float.parseFloat(splittedInstruction[1]);
+						hasFixedUnits = true;
 						break;
 				case "probability switched on": 
 						//If its probability given in format 1 in N, split it over " in " String
 						String[] fraction = splittedInstruction[1].split(" in ");
 						if(fraction.length==2) {
 							oneInN = Integer.parseInt(fraction[1]);
+							hasOneInN = true;
 						}
 						else {
 							//If after splitting, it consists of one part, then throw an Exception
@@ -154,6 +173,7 @@ public class ConfigParser {
 					String [] cycleLengthString = splittedInstruction[1].split("/");
 					if(cycleLengthString.length==2) {
 						cycleLength = Integer.parseInt(cycleLengthString[0]);
+						hasCycleLength = true;
 					}
 					else {
 						//If after splitting, it consists of one part, then throw an Exception
@@ -176,22 +196,42 @@ public class ConfigParser {
 		//After processing whole text block, create new Appliance object of required type and add it to the simulated house
 		Appliance newAppliance;
 		
+		if(!hasSubclass) {
+			throw new Exception("No subclass specified");
+		}
+		
 		//Switch over subclass string (converted to lower case)
 		switch(subclass.toLowerCase()) {
 		case "cyclicfixed":
+			if(!(hasFixedUnits && hasCycleLength)) {
+				throw new Exception ("too few arguments too construct cyclicfixed");
+			}
 			newAppliance = new CyclicFixed(applianceName, fixedUnitsConsumed, cycleLength);
 			break;
 		case "cyclicvaries":
+			if(!(hasMinUnits && hasMaxUnits && hasCycleLength)) {
+				throw new Exception ("too few arguments too construct cyclicvaries");
+			}
 			newAppliance = new CyclicVaries(applianceName, minUnitsConsumed, maxUnitsConsumed, cycleLength);
 			break;
 		case "randomfixed":
+			if(!(hasFixedUnits && hasOneInN)) {
+				throw new Exception ("too few arguments too construct randomfixed");
+			}
 			newAppliance = new RandomFixed(applianceName, fixedUnitsConsumed, oneInN);
 			break;
 		case "randomvaries":
+			if(!(hasMinUnits && hasMaxUnits && hasOneInN)) {
+				throw new Exception ("too few arguments too construct randomvaries");
+			}
 			newAppliance = new RandomVaries(applianceName, minUnitsConsumed, maxUnitsConsumed, oneInN);
 			break;
 		default:
 				throw new Exception("syntax error: wrong name of the appliance");
+		}
+		
+		if(!hasMeter) {
+			throw new Exception("no meter specified");
 		}
 		
 		//Switch over the type of connected meter and call appropriate method on house

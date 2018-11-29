@@ -1,3 +1,20 @@
+doubleappliance: Dishwasher
+subclass: CyclicVaries
+meter: waterdouble
+Min units consumed: 4
+Max units consumed: 18
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
+subclass: CyclicVaries
+meter: electricdouble
+Min units consumed: 4
+Max units consumed: 18
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
 name: Lights
 subclass: CyclicFixed
 meter: electric
@@ -108,43 +125,9 @@ Cycle length:
 
 name: Wind turbine
 subclass: RandomVaries
-meter: electricity
+meter: electric
 Min units consumed: -1
 Max units consumed: -25
 Fixed units consumed: 
 Probability switched on: 1 in 2
 Cycle length: 
-
-ecodoubleappliance: DishWasher
-mode: normal
-subclass: CyclicFixed
-meter: waterdouble
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 6
-Probability switched on:
-Cycle length: 24/24
-
-subclass: CyclicFixed
-meter: electricdouble
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 6
-Probability switched on:
-Cycle length: 24/24
-
-subclass: CyclicFixed
-meter: waterdouble
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 3
-Probability switched on:
-Cycle length: 24/24
-
-subclass: CyclicFixed
-meter: electricdouble
-Min units consumed:
-Max units consumed:
-Fixed units consumed: 3
-Probability switched on:
-Cycle length: 24/24
