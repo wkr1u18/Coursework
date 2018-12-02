@@ -177,7 +177,7 @@ public class House {
 				totalCost += activate();	
 			}
 			catch(InterruptedException e) {
-				//Ignore the exception
+
 			}
 		}
 		return totalCost;

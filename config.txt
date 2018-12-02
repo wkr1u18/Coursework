@@ -1,3 +1,37 @@
+ecodoubleappliance: EcoDishwasher
+mode: eco
+subclass: CyclicVaries
+meter: waterdouble
+Min units consumed: 4
+Max units consumed: 18
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
+subclass: CyclicVaries
+meter: electricdouble
+Min units consumed: 4
+Max units consumed: 18
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
+subclass: CyclicVaries
+meter: waterdouble
+Min units consumed: 2
+Max units consumed: 12
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
+subclass: CyclicVaries
+meter: electricdouble
+Min units consumed: 2
+Max units consumed: 12
+Fixed units consumed: 
+Probability switched on:
+Cycle length: 2/24
+
 doubleappliance: Dishwasher
 subclass: CyclicVaries
 meter: waterdouble
